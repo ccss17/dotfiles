@@ -33,7 +33,7 @@ case "$distro" in
     if ! type lsd 2>/dev/null; then
         DEBFILE="lsd.deb"
         VERSION=`curl -s https://api.github.com/repos/lsd-rs/lsd/releases/latest | grep tag_name | cut -d '"' -f 4`
-        wget -q -O $DEBFILE https://github.com/lsd-rs/lsd/releases/download/$VERSION/lsd_${VERSION}_amd64.deb
+        wget -q -O $DEBFILE https://github.com/lsd-rs/lsd/releases/download/$VERSION/lsd_${VERSION:1}_amd64.deb
         $SUDO dpkg -i $DEBFILE
     fi
     if ! type hexyl 2>/dev/null; then
