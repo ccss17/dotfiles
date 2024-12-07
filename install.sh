@@ -57,7 +57,7 @@ case "$distro" in
     ;;
 "arch")
     $SUDO pacman -S --noconfirm git zsh vim tmux bat fd unzip lsd curl wget hexyl nodejs npm gist fzf bpython
-    paru -S --noconfirm gotop-bin
+    paru -S --needed --noconfirm gotop-bin
     ;;
 esac
 
