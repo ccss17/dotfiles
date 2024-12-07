@@ -54,17 +54,17 @@ case "$distro" in
         /tmp/gotop/scripts/download.sh
         $SUDO mv gotop /usr/local/bin/
     fi
+    $SUDO pip3 install bpytop --upgrade
     ;;
 "arch")
-    $SUDO pacman -S --noconfirm git zsh vim tmux bat fd unzip lsd curl wget hexyl nodejs npm gist fzf bpython
-    paru -S --needed --noconfirm gotop-bin
+    $SUDO pacman -S --noconfirm --needed base-devel git zsh vim tmux bat fd unzip lsd curl wget hexyl nodejs npm gist fzf python python-pip python-setuptools python-pipx python-pillow python-colorama bpython asciiquarium banner catimg cmatrix figlet jp2a letterpress nyancat toilet sl emacs screenfetch cowsay fortune ponysay
+    paru -S --needed --noconfirm gotop-bin ctree unimatrix-git pipes.sh arttime-git ascii-draw ascii-rain-git bash-pipes boxes cbonsai durdraw neo-matrix tty-clock mkinitcpio-archlogo alsi archey3
+    pipx install bpytop numpy 
+    $SUDO wget -d -c -O /usr/local/bin/ChristBASHTree "https://raw.githubusercontent.com/sergiolepore/ChristBASHTree/master/tree-EN.sh" 
+    $SUDO chmod +x /usr/local/bin/ChristBASHTree 
     ;;
 esac
 
-#
-# install bpytop
-#
-$SUDO pip3 install bpytop --upgrade
 
 #
 # install tldr
