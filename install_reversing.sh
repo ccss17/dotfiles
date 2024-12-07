@@ -1,5 +1,6 @@
 #!/bin/bash
 
+set -xe
 if [[ $UID == 0 ]]; then
     CMD=""
 else
@@ -27,13 +28,13 @@ case "$distro" in
     python3 -m pip -q install capstone ropgadget
     ;;
 "arch")
-    $CMD pacman -S --noconfirm gdb pwndbg radare2 lib32-glibc 
+    $CMD pacman -S --noconfirm gdb pwndbg radare2 lib32-glibc ninja meson
     #pacman -S lib32-glibc lib32-ncurses lib32-libstdc++5
     ;;
 esac
 
-r2pm init
-r2pm install r2dec
+r2pm -U
+$CMD r2pm -gi r2dec
 
 [[ -f ~/.gdbinit ]] && mv ~/.gdbinit ~/.gdbinit.bak
 cp .gdbinit ~/.gdbinit
