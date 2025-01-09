@@ -92,6 +92,9 @@ fi
 # exec zsh -l
 # $SUDO chsh -s $(which zsh)
 
+# zeta theme
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/skylerlee/zeta-zsh-theme/master/scripts/install.sh)"
+
 #
 # install rc files
 #
