@@ -11,3 +11,4 @@ plugins=(
 source $ZSH/oh-my-zsh.sh
 stty -ixon
 source ~/.zsh_aliases
+source ~/miniconda3/bin/activate && conda deactivate
