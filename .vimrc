@@ -86,7 +86,7 @@ call plug#end()
 
 "colorscheme nord
 
-colorscheme embark
+" colorscheme embark
 "let g:airline_theme = 'embark'
 "let g:embark_terminal_italics = 1
 set laststatus=2

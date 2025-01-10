@@ -93,7 +93,9 @@ fi
 # $SUDO chsh -s $(which zsh)
 
 # p10k theme
-git clone --depth=1 -q https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+if [[ ! -d ~/.oh-my-zsh/custom/themes/powerlevel10k ]]; then
+    git clone --depth=1 -q https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+fi
 
 #
 # install rc files
@@ -132,12 +134,15 @@ if [[ ! -f ~/.vim/autoload/plug.vim ]]; then
     curl -sfLo ~/.vim/autoload/plug.vim --create-dirs \
         https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
     vim +PlugInstall +qall
+    echo "colorscheme embark" >> ~/.vimrc
 fi
 
 #
 # install miniconda
 #
-mkdir -p ~/miniconda3 
-wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda3/miniconda.sh 
-bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3 
-rm ~/miniconda3/miniconda.sh 
+if [[ ! -d ~/.oh-my-zsh ]]; then
+    mkdir -p ~/miniconda3 
+    wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda3/miniconda.sh 
+    bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3 
+    rm ~/miniconda3/miniconda.sh 
+fi
