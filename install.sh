@@ -82,18 +82,18 @@ if [[ ! -d ~/.oh-my-zsh ]]; then
 fi
 # [[ -f ~/.zshrc ]] && mv ~/.zshrc ~/.zshrc.bak
 # cp _zshrc ~/.zshrc
-[[ ! -d ~/.oh-my-zsh/custom/themes/alien-minimal ]] && \
-    git clone -q --recurse-submodules https://github.com/eendroroy/alien-minimal.git \
-        ~/.oh-my-zsh/custom/themes/alien-minimal
+# [[ ! -d ~/.oh-my-zsh/custom/themes/alien-minimal ]] && \
+#     git clone -q --recurse-submodules https://github.com/eendroroy/alien-minimal.git \
+#         ~/.oh-my-zsh/custom/themes/alien-minimal
 [[ ! -d ~/.oh-my-zsh/plugins/zsh-autosuggestions ]] && \
-    git clone -q https://github.com/zsh-users/zsh-autosuggestions \
+    git clone --depth=1 -q https://github.com/zsh-users/zsh-autosuggestions \
         ~/.oh-my-zsh/plugins/zsh-autosuggestions
 
 # exec zsh -l
 # $SUDO chsh -s $(which zsh)
 
 # p10k theme
-git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+git clone --depth=1 -q https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
 
 #
 # install rc files
@@ -120,14 +120,14 @@ fi
 #
 # install vim-plug
 #
-if [[ ! -f ~/.vim/autoload/onedark.vim ]]; then
-    curl -sfLo ~/.vim/autoload/onedark.vim --create-dirs \
-        https://raw.githubusercontent.com/joshdick/onedark.vim/master/autoload/onedark.vim
-fi
-if [[ ! -f ~/.vim/colors/onedark.vim ]]; then
-    curl -sfLo ~/.vim/colors/onedark.vim --create-dirs \
-        https://raw.githubusercontent.com/joshdick/onedark.vim/master/colors/onedark.vim
-fi
+# if [[ ! -f ~/.vim/autoload/onedark.vim ]]; then
+#     curl -sfLo ~/.vim/autoload/onedark.vim --create-dirs \
+#         https://raw.githubusercontent.com/joshdick/onedark.vim/master/autoload/onedark.vim
+# fi
+# if [[ ! -f ~/.vim/colors/onedark.vim ]]; then
+#     curl -sfLo ~/.vim/colors/onedark.vim --create-dirs \
+#         https://raw.githubusercontent.com/joshdick/onedark.vim/master/colors/onedark.vim
+# fi
 if [[ ! -f ~/.vim/autoload/plug.vim ]]; then
     curl -sfLo ~/.vim/autoload/plug.vim --create-dirs \
         https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
