@@ -92,8 +92,8 @@ fi
 # exec zsh -l
 # $SUDO chsh -s $(which zsh)
 
-# zeta theme
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/skylerlee/zeta-zsh-theme/master/scripts/install.sh)"
+# p10k theme
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
 
 #
 # install rc files

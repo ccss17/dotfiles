@@ -6,7 +6,7 @@ export ZSH="$HOME/.oh-my-zsh"
 export INTERFACES="wlp2s0"
 export LANG="en_US.UTF-8"
 PATH=$PATH:~/.local/bin
-ZSH_THEME="zeta"
+ZSH_THEME="powerlevel10k/powerlevel10k"
 plugins=( 
   z 
   zsh-autosuggestions
