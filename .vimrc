@@ -21,7 +21,7 @@ map <silent> <C-c> :IndentLinesToggle<CR>
 map <silent> <C-m> :se nu!<CR>:se rnu!<CR>
 map <silent> <C-s> :w<CR>
 map <silent> <C-q> :q<CR>
-map <silent> <C-o> :vsp ~/.vimrc<CR>
+" map <silent> <C-o> :vsp ~/.vimrc<CR>
 nmap <silent> <F10> :tabn<CR>
 nmap <silent> <F9> :tabp<CR>
 nmap <silent> <C-p> :NERDTreeToggle<CR>
