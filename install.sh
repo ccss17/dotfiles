@@ -148,7 +148,11 @@ if [[ ! -d ~/miniconda3 ]]; then
 fi
 
 #
-# A curated list of command-line utilities written in Rust: https://gist.github.com/sts10/daadbc2f403bdffad1b6d33aff016c0a
+# A curated list of command-line utilities written in Rust: 
+#
+# ref:
+# https://gist.github.com/sts10/daadbc2f403bdffad1b6d33aff016c0a
+# https://www.google.com/search?q=hyperfine+alternative&oq=hyperfine+alter&gs_lcrp=EgZjaHJvbWUqCAgBEAAYFhgeMgYIABBFGDkyCAgBEAAYFhgeMg0IAhAAGIYDGIAEGIoFMg0IAxAAGIYDGIAEGIoFMg0IBBAAGIYDGIAEGIoFMg0IBRAAGIYDGIAEGIoF0gEIMjI4MGowajSoAgCwAgE&sourceid=chrome&ie=UTF-8
 #
 # atuin: "Magical shell history"
 # bandwhich: Terminal bandwidth utilization tool
