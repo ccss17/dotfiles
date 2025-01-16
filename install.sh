@@ -58,7 +58,7 @@ case "$distro" in
     ;;
 "arch")
     $SUDO pacman -S --noconfirm --needed base-devel git zsh vim tmux bat fd unzip lsd curl wget hexyl nodejs npm gist fzf python python-pip python-setuptools python-pipx python-pillow python-colorama bpython asciiquarium banner catimg cmatrix figlet jp2a letterpress nyancat toilet sl emacs screenfetch cowsay fortune-mod ponysay inetutils sysstat
-    paru -S --needed --noconfirm gotop-bin ctree unimatrix-git pipes.sh arttime-git ascii-draw ascii-rain-git bash-pipes boxes cbonsai durdraw neo-matrix tty-clock mkinitcpio-archlogo alsi archey3
+    paru -S --needed --noconfirm gotop-bin ctree unimatrix-git pipes.sh arttime-git ascii-draw ascii-rain-git bash-pipes boxes cbonsai durdraw neo-matrix tty-clock mkinitcpio-archlogo alsi archey3 miniconda3
     pipx install bpytop numpy 
     $SUDO wget -d -c -O /usr/local/bin/ChristBASHTree "https://raw.githubusercontent.com/sergiolepore/ChristBASHTree/master/tree-EN.sh" 
     $SUDO chmod +x /usr/local/bin/ChristBASHTree 
@@ -140,12 +140,12 @@ fi
 #
 # install miniconda
 #
-if [[ ! -d ~/miniconda3 ]]; then
-    mkdir -p ~/miniconda3 
-    wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda3/miniconda.sh 
-    bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3 
-    rm ~/miniconda3/miniconda.sh 
-fi
+# if [[ ! -d ~/miniconda3 ]]; then
+#     mkdir -p ~/miniconda3 
+#     wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda3/miniconda.sh 
+#     bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3 
+#     rm ~/miniconda3/miniconda.sh 
+# fi
 
 #
 # A curated list of command-line utilities written in Rust: 
