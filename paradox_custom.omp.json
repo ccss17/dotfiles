@@ -109,7 +109,7 @@
             "style": "austin",
             "threshold": 1
           },
-          "foreground": "#575656",
+          "foreground": "#a9a9a9",
           "template": " {{ .FormattedMs }} ",
           "type": "executiontime"
         }
