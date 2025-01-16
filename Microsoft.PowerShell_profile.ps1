@@ -22,6 +22,4 @@ New-Alias ll lsla
 New-Alias lt lstree
 New-Alias cl clearls
 New-Alias cs cdup
-oh-my-posh init pwsh | Invoke-Expression
 oh-my-posh init pwsh --config ~\AppData\Local\Programs\oh-my-posh\themes\paradox_custom.omp.json | Invoke-Expression
-Import-Module -Name Terminal-Icons

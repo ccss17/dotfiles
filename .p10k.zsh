@@ -572,7 +572,7 @@
 
 
   # Show duration of the last command if takes at least this many seconds.
-  typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_THRESHOLD=0
+  typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_THRESHOLD=1
   # Show this many fractional digits. Zero means round to seconds.
   typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_PRECISION=1
   # Duration format: 1d 2h 3m 4s.
@@ -838,11 +838,17 @@
 
   ##################################[ disk_usage: disk usage ]##################################
   # Colors for different levels of disk usage.
-  typeset -g POWERLEVEL9K_DISK_USAGE_NORMAL_FOREGROUND=50
+  # typeset -g POWERLEVEL9K_DISK_USAGE_NORMAL_FOREGROUND=50
+  # typeset -g POWERLEVEL9K_DISK_USAGE_NORMAL_BACKGROUND=
+  # typeset -g POWERLEVEL9K_DISK_USAGE_WARNING_FOREGROUND=50
+  # typeset -g POWERLEVEL9K_DISK_USAGE_WARNING_BACKGROUND=
+  # typeset -g POWERLEVEL9K_DISK_USAGE_CRITICAL_FOREGROUND=50
+  # typeset -g POWERLEVEL9K_DISK_USAGE_CRITICAL_BACKGROUND=
+  typeset -g POWERLEVEL9K_DISK_USAGE_NORMAL_FOREGROUND=84
   typeset -g POWERLEVEL9K_DISK_USAGE_NORMAL_BACKGROUND=
-  typeset -g POWERLEVEL9K_DISK_USAGE_WARNING_FOREGROUND=50
+  typeset -g POWERLEVEL9K_DISK_USAGE_WARNING_FOREGROUND=84
   typeset -g POWERLEVEL9K_DISK_USAGE_WARNING_BACKGROUND=
-  typeset -g POWERLEVEL9K_DISK_USAGE_CRITICAL_FOREGROUND=50
+  typeset -g POWERLEVEL9K_DISK_USAGE_CRITICAL_FOREGROUND=84
   typeset -g POWERLEVEL9K_DISK_USAGE_CRITICAL_BACKGROUND=
   # Thresholds for different levels of disk usage (percentage points).
   typeset -g POWERLEVEL9K_DISK_USAGE_WARNING_LEVEL=90
@@ -884,8 +890,10 @@
 
   ######################################[ ram: free RAM ]#######################################
   # RAM color.
-  typeset -g POWERLEVEL9K_RAM_FOREGROUND=50
+  typeset -g POWERLEVEL9K_RAM_FOREGROUND=229
   typeset -g POWERLEVEL9K_RAM_BACKGROUND=0
+  # typeset -g POWERLEVEL9K_RAM_FOREGROUND=50
+  # typeset -g POWERLEVEL9K_RAM_BACKGROUND=0
   # Custom icon.
   # typeset -g POWERLEVEL9K_RAM_VISUAL_IDENTIFIER_EXPANSION='⭐'
   typeset -g POWERLEVEL9K_RAM_VISUAL_IDENTIFIER_EXPANSION=''
