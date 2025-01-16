@@ -1,12 +1,9 @@
-alias src="source ~/.zshrc"
 alias t=tmux
 alias v=vim
-alias rm=rm -i
 alias c=clear
 alias cs='cd ..'
 alias d=docker
 alias bpy=bpython
-#alias ls='lsd --icon never'
 alias ls='lsd'
 alias cl='clear;ls'
 alias l='ls'
@@ -19,4 +16,3 @@ alias py=python3
 alias py2=python2
 alias py3=python3
 alias q=exit
-alias tldr='tldr -t base16'
