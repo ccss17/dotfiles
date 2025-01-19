@@ -124,6 +124,18 @@
           "foreground": "#a9a9a9",
           "template": " {{ .FormattedMs }} ",
           "type": "executiontime"
+        },
+        {
+          "type": "text",
+          "style": "plain",
+          "foreground": "#6ce0bd",
+          "template": "󰩠 {{ .Env.ip }} "
+        },
+        {
+          "type": "text",
+          "style": "plain",
+          "foreground": "#787878",
+          "template": "󰖟 {{ .Env.public_ip }}"
         }
       ],
       "type": "rprompt"

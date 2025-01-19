@@ -10,12 +10,15 @@ function lsa { ls -a }
 function lsla { ls -la }
 function lstree { ls --tree }
 function get_ip {
-    $IpAddress = (Get-NetIPAddress |
-  Where-Object {
-    $_.AddressState -eq 'Preferred' -and 
-    $_.ValidLifetime -lt '24:00:00'
-  }
-);$IpAddress.IPAddress
+  $IpAddress = (Get-NetIPAddress |
+    Where-Object {
+      $_.AddressState -eq 'Preferred' -and 
+      $_.ValidLifetime -lt '24:00:00'
+    }
+  );$IpAddress.IPAddress
+}
+function get_public_ip {
+  (Invoke-WebRequest ifconfig.me/ip).Content.Trim()
 }
 
 New-Alias d docker
@@ -31,5 +34,8 @@ New-Alias lt lstree
 New-Alias cl clearls
 New-Alias cs cdup
 New-Alias ip get_ip
+
+$Env:ip = get_ip
+$Env:public_ip = get_public_ip
 
 oh-my-posh init pwsh --config ~\AppData\Local\Programs\oh-my-posh\themes\paradox_custom.omp.json | Invoke-Expression
