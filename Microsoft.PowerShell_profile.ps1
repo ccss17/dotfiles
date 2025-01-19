@@ -9,6 +9,14 @@ function exitf { exit }
 function lsa { ls -a }
 function lsla { ls -la }
 function lstree { ls --tree }
+function get_ip {
+    $IpAddress = (Get-NetIPAddress |
+  Where-Object {
+    $_.AddressState -eq 'Preferred' -and 
+    $_.ValidLifetime -lt '24:00:00'
+  }
+);$IpAddress.IPAddress
+}
 
 New-Alias d docker
 New-Alias c clear
@@ -22,4 +30,6 @@ New-Alias ll lsla
 New-Alias lt lstree
 New-Alias cl clearls
 New-Alias cs cdup
+New-Alias ip get_ip
+
 oh-my-posh init pwsh --config ~\AppData\Local\Programs\oh-my-posh\themes\paradox_custom.omp.json | Invoke-Expression
