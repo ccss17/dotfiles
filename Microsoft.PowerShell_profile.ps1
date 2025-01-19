@@ -39,5 +39,3 @@ $Env:ip = get_ip
 $Env:public_ip = get_public_ip
 
 oh-my-posh init pwsh --config ~\AppData\Local\Programs\oh-my-posh\themes\paradox_custom.omp.json | Invoke-Expression
-
-cd ~\Documents\repo\
