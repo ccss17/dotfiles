@@ -98,3 +98,4 @@ let g:lightline = {
       \ 'colorscheme': 'powerlineish',
       "\ 'colorscheme': 'embark',
       \ }
+colorscheme embark

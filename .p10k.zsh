@@ -112,8 +112,8 @@
     # =========================[ Line #2 ]=========================
     newline
     command_execution_time  # duration of the last command
-    # ip                    # ip address and bandwidth usage for a specified network interface
-    # public_ip             # public IP address
+    ip                    # ip address and bandwidth usage for a specified network interface
+    public_ip             # public IP address
     # proxy                 # system-wide http/https/ftp proxy
     # battery               # internal battery
     # wifi                  # wifi speed
@@ -1729,10 +1729,25 @@
 
   ###############################[ public_ip: public IP address ]###############################
   # Public IP color.
-  typeset -g POWERLEVEL9K_PUBLIC_IP_FOREGROUND=7
-  typeset -g POWERLEVEL9K_PUBLIC_IP_BACKGROUND=0
+  #typeset -g POWERLEVEL9K_PUBLIC_IP_FOREGROUND=7
+  -g POWERLEVEL9K_PUBLIC_IP_BACKGROUND=0
   # Custom icon.
   # typeset -g POWERLEVEL9K_PUBLIC_IP_VISUAL_IDENTIFIER_EXPANSION='⭐'
+  typeset -g POWERLEVEL9K_PUBLIC_IP_FOREGROUND=248
+  # Custom icon.
+  typeset -g POWERLEVEL9K_PUBLIC_IP_VISUAL_IDENTIFIER_EXPANSION='󰖟'
+
+  typeset -g POWERLEVEL9K_PUBLIC_IP_BACKGROUND=
+  typeset -g POWERLEVEL9K_PUBLIC_IP_LEFT_SUBSEGMENT_SEPARATOR=''
+  typeset -g POWERLEVEL9K_PUBLIC_IP_RIGHT_SUBSEGMENT_SEPARATOR=''
+  typeset -g POWERLEVEL9K_PUBLIC_IP_LEFT_SEGMENT_SEPARATOR=''
+  typeset -g POWERLEVEL9K_PUBLIC_IP_RIGHT_SEGMENT_SEPARATOR=''
+  typeset -g POWERLEVEL9K_PUBLIC_IP_LEFT_SUBSEGMENT_SEPARATOR=''
+  typeset -g POWERLEVEL9K_PUBLIC_IP_RIGHT_SUBSEGMENT_SEPARATOR=''
+  typeset -g POWERLEVEL9K_PUBLIC_IP_LEFT_SEGMENT_SEPARATOR=''
+  typeset -g POWERLEVEL9K_PUBLIC_IP_RIGHT_SEGMENT_SEPARATOR=''
+  typeset -g POWERLEVEL9K_PUBLIC_IP_LEFT_PROMPT_LAST_SEGMENT_END_SYMBOL=''
+  typeset -g POWERLEVEL9K_PUBLIC_IP_RIGHT_PROMPT_FIRST_SEGMENT_START_SYMBOL=''
 
   ########################[ vpn_ip: virtual private network indicator ]#########################
   # VPN IP color.
@@ -1753,8 +1768,7 @@
 
   ###########[ ip: ip address and bandwidth usage for a specified network interface ]###########
   # IP color.
-  typeset -g POWERLEVEL9K_IP_BACKGROUND=4
-  typeset -g POWERLEVEL9K_IP_FOREGROUND=0
+  typeset -g POWERLEVEL9K_IP_FOREGROUND=156
   # The following parameters are accessible within the expansion:
   #
   #   Parameter             | Meaning
@@ -1772,7 +1786,19 @@
   # Run `ifconfig` or `ip -4 a show` to see the names of all network interfaces.
   typeset -g POWERLEVEL9K_IP_INTERFACE='[ew].*'
   # Custom icon.
-  # typeset -g POWERLEVEL9K_IP_VISUAL_IDENTIFIER_EXPANSION='⭐'
+  typeset -g POWERLEVEL9K_IP_VISUAL_IDENTIFIER_EXPANSION='󰩠'
+  typeset -g POWERLEVEL9K_IP_BACKGROUND=
+  typeset -g POWERLEVEL9K_IP_LEFT_SUBSEGMENT_SEPARATOR=''
+  typeset -g POWERLEVEL9K_IP_RIGHT_SUBSEGMENT_SEPARATOR=''
+  typeset -g POWERLEVEL9K_IP_LEFT_SEGMENT_SEPARATOR=''
+  typeset -g POWERLEVEL9K_IP_RIGHT_SEGMENT_SEPARATOR=''
+  typeset -g POWERLEVEL9K_IP_LEFT_SUBSEGMENT_SEPARATOR=''
+  typeset -g POWERLEVEL9K_IP_RIGHT_SUBSEGMENT_SEPARATOR=''
+  typeset -g POWERLEVEL9K_IP_LEFT_SEGMENT_SEPARATOR=''
+  typeset -g POWERLEVEL9K_IP_RIGHT_SEGMENT_SEPARATOR=''
+  typeset -g POWERLEVEL9K_IP_LEFT_PROMPT_LAST_SEGMENT_END_SYMBOL=''
+  typeset -g POWERLEVEL9K_IP_RIGHT_PROMPT_FIRST_SEGMENT_START_SYMBOL=''
+
 
   #########################[ proxy: system-wide http/https/ftp proxy ]##########################
   # Proxy color.
