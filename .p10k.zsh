@@ -1730,7 +1730,6 @@
   ###############################[ public_ip: public IP address ]###############################
   # Public IP color.
   #typeset -g POWERLEVEL9K_PUBLIC_IP_FOREGROUND=7
-  -g POWERLEVEL9K_PUBLIC_IP_BACKGROUND=0
   # Custom icon.
   # typeset -g POWERLEVEL9K_PUBLIC_IP_VISUAL_IDENTIFIER_EXPANSION='⭐'
   typeset -g POWERLEVEL9K_PUBLIC_IP_FOREGROUND=248
