@@ -79,18 +79,6 @@
       "type": "prompt"
     },
     {
-      "alignment": "right",
-      "segments": [
-        {
-          "type": "text",
-          "powerline_symbol": "\ue0b0",
-          "foreground": "#4d646d",
-          "template": " 󰩠 {{ .Env.ip }}"
-        }
-      ],
-      "type": "prompt"
-    },
-    {
       "alignment": "left",
       "newline": true,
       "segments": [
@@ -111,26 +99,6 @@
         }
       ],
       "type": "prompt"
-    },
-    {
-      "alignment": "right",
-      "segments": [
-        {
-          "properties": {
-            "style": "austin",
-            "threshold": 1
-          },
-          "foreground": "#a9a9a9",
-          "template": "{{ .FormattedMs }} ",
-          "type": "executiontime"
-        },
-        {
-          "foreground": "#586a5b",
-          "template": " {{ (div ((sub .PhysicalTotalMemory .PhysicalFreeMemory)|float64) 1073741824.0) }}/{{ (div .PhysicalTotalMemory 1073741824.0) }}GB",
-          "type": "sysinfo"
-        }
-      ],
-      "type": "rprompt"
     }
   ],
   "version": 3
