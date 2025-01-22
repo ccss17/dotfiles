@@ -84,7 +84,7 @@
         {
           "type": "text",
           "powerline_symbol": "\ue0b0",
-          "foreground": "#4d646d",
+          "foreground": "#9ae2ff",
           "template": " 󰩠 {{ .Env.ip }}"
         }
       ],
@@ -120,12 +120,12 @@
             "style": "austin",
             "threshold": 1
           },
-          "foreground": "#a9a9a9",
+          "foreground": "#797979",
           "template": "{{ .FormattedMs }} ",
           "type": "executiontime"
         },
         {
-          "foreground": "#586a5b",
+          "foreground": "#bfffc9",
           "template": " {{ (div ((sub .PhysicalTotalMemory .PhysicalFreeMemory)|float64) 1073741824.0) }}/{{ (div .PhysicalTotalMemory 1073741824.0) }}GB",
           "type": "sysinfo"
         }
