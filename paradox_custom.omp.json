@@ -5,31 +5,6 @@
       "alignment": "left",
       "segments": [
         {
-          "background": "#100e23",
-          "foreground": "#FEF5ED",
-          "powerline_symbol": "\ue0b0",
-          "properties": {
-            "alpine": "\uf300",
-            "arch": "\uf303",
-            "centos": "\uf304",
-            "debian": "\uf306",
-            "elementary": "\uf309",
-            "fedora": "\uf30a",
-            "gentoo": "\uf30d",
-            "linux": "\ue712",
-            "macos": "\ue711",
-            "manjaro": "\uf312",
-            "mint": "\uf30f",
-            "opensuse": "\uf314",
-            "raspbian": "\uf315",
-            "ubuntu": "\uf31c",
-            "windows": "\ue70f"
-          },
-          "style": "plain",
-          "template": " {{ if .WSL }}WSL at {{ end }}{{.Icon}} ",
-          "type": "os"
-        },
-        {
           "background": "#91ddff",
           "foreground": "#100e23",
           "powerline_symbol": "\ue0b0",
@@ -53,7 +28,7 @@
             "fetch_upstream_icon": true
           },
           "style": "powerline",
-          "template": " {{ .UpstreamIcon }}{{ .HEAD }}{{if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }} \uf044 {{ .Working.String }}{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Staging.Changed }} \uf046 {{ .Staging.String }}{{ end }}{{ if gt .StashCount 0 }} \ueb4b {{ .StashCount }}{{ end }} ",
+          "template": " {{ .HEAD }}{{if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }} \uf044 {{ .Working.String }}{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Staging.Changed }} \uf046 {{ .Staging.String }}{{ end }}{{ if gt .StashCount 0 }} \ueb4b {{ .StashCount }}{{ end }} ",
           "type": "git"
         },
         {
@@ -88,6 +63,31 @@
       "alignment": "left",
       "newline": true,
       "segments": [
+        {
+          "background": "#100e23",
+          "foreground": "#FEF5ED",
+          "powerline_symbol": "\ue0b0",
+          "properties": {
+            "alpine": "\uf300",
+            "arch": "\uf303",
+            "centos": "\uf304",
+            "debian": "\uf306",
+            "elementary": "\uf309",
+            "fedora": "\uf30a",
+            "gentoo": "\uf30d",
+            "linux": "\ue712",
+            "macos": "\ue711",
+            "manjaro": "\uf312",
+            "mint": "\uf30f",
+            "opensuse": "\uf314",
+            "raspbian": "\uf315",
+            "ubuntu": "\uf31c",
+            "windows": "\ue70f"
+          },
+          "style": "plain",
+          "template": " {{ if .WSL }}WSL at {{ end }}{{.Icon}} ",
+          "type": "os"
+        },
         {
           "background": "#FEF5ED",
           "foreground": "#100e23",
