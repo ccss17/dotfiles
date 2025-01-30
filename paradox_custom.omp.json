@@ -92,7 +92,8 @@
           "background": "#FEF5ED",
           "foreground": "#100e23",
           "style": "powerline",
-          "template": " \ue235 {{ if .Error }}{{ .Error }}{{ else }}{{ if .Venv }}{{ .Venv }} {{ end }}{{ end }}",
+          "template": " \ue235 {{ if .Error }}{{ .Error }}{{ else }}{{ if .Venv }}{{ .Venv }} {{ end }}{{ .Full }}{{ end }}",
+          "powerline_symbol": "\ue0b0",
           "type": "python"
         },
         {
