@@ -52,8 +52,8 @@ case "$distro" in
     $SUDO pip3 install bpytop --upgrade
     ;;
 "arch" | "manjaro" | "endeavouros")
-    $SUDO pacman -S --noconfirm --needed base-devel git zsh vim tmux bat fd unzip lsd curl wget hexyl nodejs npm gist fzf python python-pip python-setuptools python-pipx python-pillow python-colorama bpython asciiquarium banner catimg cmatrix figlet jp2a letterpress nyancat toilet sl emacs screenfetch cowsay fortune-mod ponysay inetutils sysstat alacritty ibus ibus-hangul discord ttf-firacode-nerd adobe-source-han-sans-kr-fonts adobe-source-han-serif-kr-fonts
-    paru -S --needed --noconfirm gotop-bin ctree unimatrix-git pipes.sh arttime-git ascii-draw ascii-rain-git bash-pipes boxes cbonsai durdraw neo-matrix tty-clock mkinitcpio-archlogo alsi archey3 google-chrome visual-studio-code-bin ttf-nanum ttf-nanumgothic_coding kakaotalk
+    $SUDO pacman -S --noconfirm --needed base-devel git zsh vim tmux bat fd unzip lsd curl wget hexyl nodejs npm gist fzf python python-pip python-setuptools python-pipx python-pillow python-colorama bpython asciiquarium banner catimg cmatrix figlet jp2a letterpress nyancat toilet sl emacs screenfetch cowsay fortune-mod ponysay inetutils sysstat alacritty ibus ibus-hangul discord ttf-firacode-nerd adobe-source-han-sans-kr-fonts adobe-source-han-serif-kr-fonts docker
+    paru -S --needed --noconfirm gotop-bin ctree unimatrix-git pipes.sh arttime-git ascii-draw ascii-rain-git bash-pipes boxes cbonsai durdraw neo-matrix tty-clock mkinitcpio-archlogo alsi archey3 google-chrome visual-studio-code-bin ttf-nanum ttf-nanumgothic_coding kakaotalk notion-app-electron
     pipx install bpytop numpy 
     $SUDO wget -d -c -O /usr/local/bin/ChristBASHTree "https://raw.githubusercontent.com/sergiolepore/ChristBASHTree/master/tree-EN.sh" 
     $SUDO chmod +x /usr/local/bin/ChristBASHTree 
