@@ -99,3 +99,4 @@ let g:lightline = {
       "\ 'colorscheme': 'embark',
       \ }
 colorscheme embark
+colorscheme embark

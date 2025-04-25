@@ -1,6 +1,6 @@
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
+#if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  #source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+#fi
 export TERM="xterm-256color"
 export ZSH="$HOME/.oh-my-zsh"
 export INTERFACES="wlp2s0"
@@ -12,7 +12,7 @@ plugins=(
   zsh-autosuggestions
 )
 source $ZSH/oh-my-zsh.sh
-stty -ixon
+# stty -ixon
 source ~/.zsh_aliases
 source ~/miniconda3/bin/activate && conda deactivate
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
