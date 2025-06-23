@@ -98,3 +98,7 @@ if [[ ! -d ~/miniconda3 ]]; then
     bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3 
     rm ~/miniconda3/miniconda.sh 
 fi
+
+if ! type uv 2>/dev/null; then
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+fi
