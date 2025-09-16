@@ -108,3 +108,5 @@ if [[ ! -f ~/.vim/autoload/plug.vim ]]; then
     echo "colorscheme embark" >> ~/.vimrc
 fi
 
+echo 'LANG="en_US.UTF-8"' >> /etc/default/locale
+echo 'LC_ALL="en_US.UTF-8"' >> /etc/default/locale
