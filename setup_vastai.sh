@@ -1,7 +1,15 @@
 #!/bin/bash
 set -xe
 
-apt-get -y -qq install git zsh vim tmux unzip curl wget nodejs npm ruby-full python3 python3-pip bpython fd-find bat hexyl fzf bpytop
+#
+# update system
+#
+apt-get update && sudo apt-get upgrade -y
+
+#
+# install packages
+#
+apt-get -y -qq install git zsh vim tmux unzip curl wget python3 python3-pip bpython fd-find bat 
 if ! type hyperfine 2>/dev/null; then
     ZIPFILE="hyperfine.deb"
     VERSION=`curl -s https://api.github.com/repos/sharkdp/hyperfine/releases/latest | grep tag_name | cut -d '"' -f 4`
@@ -14,6 +22,15 @@ if ! type lsd 2>/dev/null; then
     VERSION=`curl -s https://api.github.com/repos/lsd-rs/lsd/releases/latest | grep tag_name | cut -d '"' -f 4`
     wget -q -O $ZIPFILE https://github.com/lsd-rs/lsd/releases/download/$VERSION/lsd-musl_${VERSION:1}_amd64.deb
     dpkg -i $ZIPFILE
+fi
+
+if ! type btop 2>/dev/null; then
+    VERSION=`curl -s https://api.github.com/repos/aristocratos/btop/releases/latest | grep tag_name | cut -d '"' -f 4`
+    wget https://github.com/aristocratos/btop/releases/download/$VERSION/btop-x86_64-linux-musl.tbz 
+    tar -xjf btop-x86_64-linux-musl.tbz 
+    cd btop 
+    make install
+    cd ..
 fi
 
 #
@@ -72,7 +89,6 @@ for file_path in $(find $PWD -type f -name ".*" ); do
 done
 cat .gitconfig >> ~/.gitconfig
 cat .zshrc_vastai >> ~/.zshrc
-cat .p10k_vastai >> ~/.p10k.zsh
 
 #
 # tmux 2.x config
