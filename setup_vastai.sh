@@ -50,11 +50,11 @@ if [[ ! -d ~/micromamba ]]; then
     curl -Ls https://micro.mamba.pm/api/micromamba/linux-64/latest | tar -xvj bin/micromamba
     mv bin/micromamba ~/.local/bin
     rmdir bin
-    micromamba shell init -r ~/micromamba
-    micromamba config append channels conda-forge
-    micromamba config set channel_priority strict
-    micromamba activate
-    micromamba install python -c conda-forge -y
+    ~/.local/bin/micromamba shell init -r ~/micromamba
+    ~/.local/bin/micromamba config append channels conda-forge
+    ~/.local/bin/micromamba config set channel_priority strict
+    ~/.local/bin/micromamba activate
+    ~/.local/bin/micromamba install python -c conda-forge -y
 fi
 
 
