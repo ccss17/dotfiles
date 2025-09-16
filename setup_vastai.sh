@@ -59,38 +59,6 @@ if [[ ! -d ~/micromamba ]]; then
     micromamba install python -c conda-forge -y
 fi
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 #
 # install rc files
 #
@@ -104,6 +72,7 @@ for file_path in $(find $PWD -type f -name ".*" ); do
 done
 cat .gitconfig >> ~/.gitconfig
 cat .zshrc_vastai >> ~/.zshrc
+cat .p10k_vastai >> ~/.p10k.zsh
 
 #
 # tmux 2.x config

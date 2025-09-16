@@ -108,7 +108,7 @@
     load                  # CPU load
     ram                   # free RAM
     disk_usage            # disk usage
-    cpu_arch              # CPU architecture
+    # cpu_arch              # CPU architecture
     # =========================[ Line #2 ]=========================
     newline
     command_execution_time  # duration of the last command
