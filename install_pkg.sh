@@ -92,13 +92,30 @@ fi
 #
 # install miniconda
 #
-if [[ ! -d ~/miniconda3 ]]; then
-    mkdir -p ~/miniconda3 
-    wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda3/miniconda.sh 
-    bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3 
-    rm ~/miniconda3/miniconda.sh 
-fi
+# if [[ ! -d ~/miniconda3 ]]; then
+#     mkdir -p ~/miniconda3 
+#     wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda3/miniconda.sh 
+#     bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3 
+#     rm ~/miniconda3/miniconda.sh 
+# fi
 
+#
+# uv
+#
 if ! type uv 2>/dev/null; then
     curl -LsSf https://astral.sh/uv/install.sh | sh
+fi
+
+#
+# install micromamba
+#
+if [[ ! -d ~/micromamba ]]; then
+    curl -Ls https://micro.mamba.pm/api/micromamba/linux-64/latest | tar -xvj bin/micromamba
+    mv bin/micromamba ~/.local/bin
+    rmdir bin
+    micromamba shell init -r ~/micromamba
+    micromamba config append channels conda-forge
+    micromamba config set channel_priority strict
+    micromamba activate
+    micromamba install python -c conda-forge -y
 fi
