@@ -48,7 +48,7 @@ fi
 #
 if [[ ! -d ~/micromamba ]]; then
     curl -Ls https://micro.mamba.pm/api/micromamba/linux-64/latest | tar -xvj bin/micromamba
-    mv bin/micromamba ~/.local/bin
+    mv bin/micromamba ~/.local/bin/micromamba
     rmdir bin
     ~/.local/bin/micromamba shell init -r ~/micromamba
     ~/.local/bin/micromamba config append channels conda-forge
