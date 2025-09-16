@@ -51,11 +51,12 @@ if [[ ! -d ~/micromamba ]]; then
     mkdir -p ~/.local/bin
     mv bin/micromamba ~/.local/bin/micromamba
     rmdir bin
-    ~/.local/bin/micromamba shell init -s zsh -r ~/micromamba
-    ~/.local/bin/micromamba config append channels conda-forge
-    ~/.local/bin/micromamba config set channel_priority strict
-    ~/.local/bin/micromamba activate
-    ~/.local/bin/micromamba install python -c conda-forge -y
+    eval "$(~/.local/bin/micromamba shell hook --shell bash)"
+    micromamba shell init -s zsh -r ~/micromamba
+    micromamba config append channels conda-forge
+    micromamba config set channel_priority strict
+    micromamba activate
+    micromamba install python -c conda-forge -y
 fi
 
 
