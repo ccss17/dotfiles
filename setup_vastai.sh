@@ -89,6 +89,7 @@ for file_path in $(find $PWD -type f -name ".*" ); do
 done
 cat .gitconfig >> ~/.gitconfig
 cat .zshrc_vastai >> ~/.zshrc
+cat .p10k_vastai.zsh >> ~/.p10k.zsh
 
 #
 # tmux 2.x config
