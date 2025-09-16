@@ -25,4 +25,4 @@ else
 fi
 unset __mamba_setup
 # <<< mamba initialize <<<
-micromamba activate  # this activates the base environment
+micromamba activate main  # this activates the base environment

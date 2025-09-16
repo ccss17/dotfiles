@@ -1,15 +1,11 @@
 #!/bin/bash
 set -xe
 
-#
-# update system
-#
-apt-get update && sudo apt-get upgrade -y
 
 #
 # install packages
 #
-apt-get -y -qq install git zsh vim tmux unzip curl wget python3 python3-pip bpython fd-find bat 
+apt-get -y -qq install git zsh vim tmux unzip curl wget fd-find bat 
 if ! type hyperfine 2>/dev/null; then
     ZIPFILE="hyperfine.deb"
     VERSION=`curl -s https://api.github.com/repos/sharkdp/hyperfine/releases/latest | grep tag_name | cut -d '"' -f 4`
@@ -72,8 +68,6 @@ if [[ ! -d ~/micromamba ]]; then
     micromamba shell init -s zsh -r ~/micromamba
     micromamba config append channels conda-forge
     micromamba config set channel_priority strict
-    micromamba activate
-    micromamba install python -c conda-forge -y
 fi
 
 #
