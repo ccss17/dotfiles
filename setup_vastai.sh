@@ -1,11 +1,20 @@
 #!/bin/bash
 set -xe
 
-apt-get -y -qq install git zsh vim tmux unzip curl wget nodejs npm ruby-full python3 python3-pip bpython fd-find bat lsd hexyl fzf bpytop
+apt-get -y -qq install git zsh vim tmux unzip curl wget nodejs npm ruby-full python3 python3-pip bpython fd-find bat hexyl fzf bpytop
 if ! type hyperfine 2>/dev/null; then
     ZIPFILE="hyperfine.deb"
     VERSION=`curl -s https://api.github.com/repos/sharkdp/hyperfine/releases/latest | grep tag_name | cut -d '"' -f 4`
     wget -q -O $ZIPFILE https://github.com/sharkdp/hyperfine/releases/download/$VERSION/hyperfine_${VERSION:1}_amd64.deb
+    dpkg -i $ZIPFILE
+fi
+
+https://github.com/lsd-rs/lsd/releases
+
+if ! type lsd 2>/dev/null; then
+    ZIPFILE="lsd.deb"
+    VERSION=`curl -s https://api.github.com/repos/lsd-rs/lsd/releases/latest | grep tag_name | cut -d '"' -f 4`
+    wget -q -O $ZIPFILE https://github.com/lsd-rs/lsd/releases/download/$VERSION/lsd-musl_${VERSION:1}_amd64.deb
     dpkg -i $ZIPFILE
 fi
 
