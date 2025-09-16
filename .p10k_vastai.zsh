@@ -1055,7 +1055,7 @@
   typeset -g POWERLEVEL9K_CONTEXT_TEMPLATE='%n@$(cat ~/.vast_containerlabel)'
   # Don't show context unless running with privileges or in SSH.
   # Tip: Remove the next line to always show context.
-  typeset -g POWERLEVEL9K_CONTEXT_{DEFAULT,SUDO}_{CONTENT,VISUAL_IDENTIFIER}_EXPANSION=
+  # typeset -g POWERLEVEL9K_CONTEXT_{DEFAULT,SUDO}_{CONTENT,VISUAL_IDENTIFIER}_EXPANSION=
 
   ###[ virtualenv: python virtual environment (https://docs.python.org/3/library/venv.html) ]###
   # Python virtual environment color.
@@ -1068,6 +1068,10 @@
   typeset -g POWERLEVEL9K_VIRTUALENV_SHOW_WITH_PYENV=false
   # Separate environment name from Python version only with a space.
   typeset -g POWERLEVEL9K_VIRTUALENV_{LEFT,RIGHT}_DELIMITER=
+  typeset -g POWERLEVEL9K_CONTEXT_{DEFAULT,REMOTE,REMOTE_SUDO,SUDO,ROOT}_CONTENT_EXPANSION='${USER}@${VAST_CONTAINERLABEL:-$HOST}'
+  typeset -g POWERLEVEL9K_CONTEXT_ROOT_CONTENT_EXPANSION='%B${USER}@${VAST_CONTAINERLABEL:-$HOST}%b'
+
+
   # Custom icon.
   # typeset -g POWERLEVEL9K_VIRTUALENV_VISUAL_IDENTIFIER_EXPANSION='⭐'
 

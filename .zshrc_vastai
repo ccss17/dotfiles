@@ -3,6 +3,7 @@ export ZSH="$HOME/.oh-my-zsh"
 export INTERFACES="wlp2s0"
 export LANG="en_US.UTF-8"
 export LC_ALL="en_US.UTF-8"
+export VAST_CONTAINERLABEL="${VAST_CONTAINERLABEL:-$(cat ~/.vast_containerlabel 2>/dev/null || echo "$HOST")}"
 PATH=$PATH:~/.local/bin
 ZSH_THEME="powerlevel10k/powerlevel10k"
 plugins=( 
