@@ -48,6 +48,7 @@ fi
 #
 if [[ ! -d ~/micromamba ]]; then
     curl -Ls https://micro.mamba.pm/api/micromamba/linux-64/latest | tar -xvj bin/micromamba
+    mkdir -p ~/.local/bin
     mv bin/micromamba ~/.local/bin/micromamba
     rmdir bin
     ~/.local/bin/micromamba shell init -r ~/micromamba
