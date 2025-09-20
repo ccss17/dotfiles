@@ -2,16 +2,9 @@
 set -xe
 
 #
-# uv
-#
-if ! type uv 2>/dev/null; then
-    curl -LsSf https://astral.sh/uv/install.sh | sh
-fi
-
-#
 # install packages
 #
-apt-get -y -qq install git zsh vim tmux unzip curl wget fd-find bat time nvtop
+apt-get -y -qq install git zsh vim tmux unzip curl wget fd-find bat time nvtop python3.11-dev python3.12-dev build-essential
 if ! type hyperfine 2>/dev/null; then
     ZIPFILE="hyperfine.deb"
     VERSION=`curl -s https://api.github.com/repos/sharkdp/hyperfine/releases/latest | grep tag_name | cut -d '"' -f 4`
@@ -34,6 +27,14 @@ if ! type btop 2>/dev/null; then
     make install
     cd ..
 fi
+
+#
+# uv
+#
+if ! type uv 2>/dev/null; then
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+fi
+
 
 #
 # install oh-my-zsh
