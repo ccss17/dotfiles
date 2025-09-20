@@ -1,6 +1,12 @@
 #!/bin/bash
 set -xe
 
+#
+# uv
+#
+if ! type uv 2>/dev/null; then
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+fi
 
 #
 # install packages
