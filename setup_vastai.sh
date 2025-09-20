@@ -4,7 +4,7 @@ set -xe
 #
 # install packages
 #
-apt-get -y -qq install git zsh vim tmux unzip curl wget fd-find bat time nvtop python3.11-dev python3.12-dev build-essential
+apt-get -y -qq install git zsh vim tmux unzip curl wget fd-find bat time nvtop python3.12-dev build-essential
 if ! type hyperfine 2>/dev/null; then
     ZIPFILE="hyperfine.deb"
     VERSION=`curl -s https://api.github.com/repos/sharkdp/hyperfine/releases/latest | grep tag_name | cut -d '"' -f 4`
