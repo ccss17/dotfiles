@@ -5,7 +5,7 @@ set -xe
 #
 # install packages
 #
-apt-get -y -qq install git zsh vim tmux unzip curl wget fd-find bat time
+apt-get -y -qq install git zsh vim tmux unzip curl wget fd-find bat time nvtop
 if ! type hyperfine 2>/dev/null; then
     ZIPFILE="hyperfine.deb"
     VERSION=`curl -s https://api.github.com/repos/sharkdp/hyperfine/releases/latest | grep tag_name | cut -d '"' -f 4`
@@ -47,13 +47,6 @@ fi
 # p10k theme
 if [[ ! -d ~/.oh-my-zsh/custom/themes/powerlevel10k ]]; then
     git clone --depth=1 -q https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
-fi
-
-#
-# uv
-#
-if ! type uv 2>/dev/null; then
-    curl -LsSf https://astral.sh/uv/install.sh | sh
 fi
 
 #
