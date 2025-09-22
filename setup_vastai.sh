@@ -32,7 +32,6 @@ if ! type gotop 2>/dev/null; then
     ZIPFILE="gotop.deb"
     VERSION=`curl -s https://api.github.com/repos/xxxserxxx/gotop/releases/latest | grep tag_name | cut -d '"' -f 4`
     wget -q -O $ZIPFILE https://github.com/xxxserxxx/gotop/releases/download/$VERSION/gotop_${VERSION}_linux_amd64.deb
-    https://github.com/xxxserxxx/gotop/releases/download/v4.2.0/gotop_v4.2.0_linux_amd64.deb
     dpkg -i $ZIPFILE
 fi
 
