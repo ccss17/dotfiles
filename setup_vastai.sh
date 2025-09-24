@@ -11,7 +11,7 @@ export DEBIAN_FRONTEND=noninteractive
 # ------------------------- base packages -------------------------
 echo "[+] Installing base packages (single apt txn)"
 apt-get update -qq
-apt-get -y -qq install git zsh vim tmux unzip curl wget fd-find bat time nvtop python3.12-dev build-essential tree
+apt-get -y -qq install --no-install-recommends git zsh vim tmux unzip curl wget fd-find bat time nvtop python3.12-dev build-essential tree
 
 # ------------------------- resolve versions (exactly like yours) -------------------------
 # Avoid curl (23) by disabling pipefail only around these pipelines
@@ -42,16 +42,6 @@ MM_TAR="$WORK/micromamba.tar"
 
 # ------------------------- parallel downloads -------------------------
 echo "[+] Parallel downloading artifacts (incl. plug.vim, OMZ, uv, micromamba)"
-# curl --parallel --parallel-max 6 --create-dirs -fsS \
-#   -o "$HYPERFINE_DEB" "$HYPERFINE_DEB_URL" \
-#   -o "$LSD_DEB"      "$LSD_DEB_URL" \
-#   -o "$BTOP_TBZ"     "$BTOP_TBZ_URL" \
-#   -o "$GOTOP_DEB"    "$GOTOP_DEB_URL" \
-#   -o "$PLUG_VIM"     "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim" \
-#   -o "$OMZ_SH"       "https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh" \
-#   -o "$UV_SH"        "https://astral.sh/uv/install.sh" \
-#   -o "$MM_TAR"       "https://micro.mamba.pm/api/micromamba/linux-64/latest"
-# NOTE: All comments are in English.
 curl --parallel --parallel-max 6 --create-dirs \
   --location \
   --retry 5 --retry-all-errors --retry-delay 2 --max-time 600 \
@@ -80,7 +70,8 @@ dpkg -i "$GOTOP_DEB"     || apt-get -y -qq -f install
 # ------------------------- btop -------------------------
 echo "[+] Installing btop from tbz"
 tar -xjf "$BTOP_TBZ" -C "$WORK"
-make -C "$WORK/btop" install
+make -C "$WORK/btop" -j"$(nproc)" install
+
 
 # ------------------------- uv (save-then-run; same official URL) -------------------------
 echo "[+] Installing uv"
@@ -103,22 +94,11 @@ mv "$WORK/mm_extract/bin/micromamba" "$HOME/.local/bin/micromamba"
 rm -rf "$WORK/mm_extract"
 
 # init micromamba (idempotent)
-# eval "$("$HOME/.local/bin/micromamba" shell hook --shell bash)"
-# "$HOME/.local/bin/micromamba" shell init -s zsh -r "$HOME/micromamba" || true
-# "$HOME/.local/bin/micromamba" config append channels conda-forge || true
-# "$HOME/.local/bin/micromamba" config set channel_priority strict || true
-
 # Ensure a stable root prefix for micromamba (works with `set -u`)
 export MAMBA_ROOT_PREFIX="$HOME/micromamba"
 export MAMBA_EXE="$HOME/.local/bin/micromamba"
-
-# Load shell hook (pass root prefix explicitly)
 eval "$("$MAMBA_EXE" shell hook --shell bash --root-prefix "$MAMBA_ROOT_PREFIX")"
-
-# Initialize zsh using the same root prefix
 "$MAMBA_EXE" shell init -s zsh -r "$MAMBA_ROOT_PREFIX"
-
-# Config as you had
 micromamba config append channels conda-forge
 micromamba config set channel_priority strict
 
