@@ -1,148 +1,123 @@
 #!/usr/bin/env bash
-# Fully patched bootstrap with maximal safe parallelization using curl --parallel
-# - All comments in English
-# - Save-then-run for all installer scripts (no pipes) to avoid curl error 23
-# - Single apt txn; local .debs via apt install
-# - Parallel artifact fetch: .deb/.tbz + plug.vim + oh-my-zsh + uv + micromamba
-# - Headless vim-plug install (--sync)
+# Final bootstrap script (your URLs & filenames preserved)
+# - Comments are in English only.
+# - Parallel downloads via curl --parallel (incl. plug.vim, oh-my-zsh, uv, micromamba)
+# - Keep your original URL patterns & dpkg -i flow; just add speed & stability tweaks.
 
 set -Eeuo pipefail
 trap 'echo "[!] Failed at line $LINENO: $BASH_COMMAND" >&2' ERR
 export DEBIAN_FRONTEND=noninteractive
 
-log(){ printf "[+] %s\n" "$*"; }
-# drop-in replacement for your helper
-get_latest_tag() {
-  # Download JSON fully first to avoid SIGPIPE from early-exiting parsers
-  local json
-  json="$(curl -fsSL "https://api.github.com/repos/$1/releases/latest")" || return 1
-  # Parse without jq (keep dependencies minimal)
-  printf '%s\n' "$json" | sed -n 's/.*"tag_name"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p' | head -n1
-}
-
-
-# 0) Base packages in a single transaction
-log "Updating apt index & installing base packages..."
+# ------------------------- base packages -------------------------
+echo "[+] Installing base packages (single apt txn)"
 apt-get update -qq
-apt-get -y -qq install git zsh vim tmux unzip curl wget fd-find bat time nvtop \
-  python3.12-dev build-essential tree ca-certificates
+apt-get -y -qq install git zsh vim tmux unzip curl wget fd-find bat time nvtop python3.12-dev build-essential tree
 
-# 1) Prepare workspace & resolve tags
+# ------------------------- resolve versions (exactly like yours) -------------------------
+# Avoid curl (23) by disabling pipefail only around these pipelines
+set +o pipefail
+HYPERFINE_VER=$(curl -s https://api.github.com/repos/sharkdp/hyperfine/releases/latest     | grep tag_name | cut -d '"' -f 4)
+LSD_VER=$(        curl -s https://api.github.com/repos/lsd-rs/lsd/releases/latest          | grep tag_name | cut -d '"' -f 4)
+BTOP_VER=$(       curl -s https://api.github.com/repos/aristocratos/btop/releases/latest   | grep tag_name | cut -d '"' -f 4)
+GOTOP_VER=$(      curl -s https://api.github.com/repos/xxxserxxx/gotop/releases/latest     | grep tag_name | cut -d '"' -f 4)
+set -o pipefail
+
+# Construct your exact URLs
+HYPERFINE_DEB_URL="https://github.com/sharkdp/hyperfine/releases/download/${HYPERFINE_VER}/hyperfine_${HYPERFINE_VER:1}_amd64.deb"
+LSD_DEB_URL="https://github.com/lsd-rs/lsd/releases/download/${LSD_VER}/lsd-musl_${LSD_VER:1}_amd64.deb"
+BTOP_TBZ_URL="https://github.com/aristocratos/btop/releases/download/${BTOP_VER}/btop-x86_64-linux-musl.tbz"
+GOTOP_DEB_URL="https://github.com/xxxserxxx/gotop/releases/download/${GOTOP_VER}/gotop_${GOTOP_VER}_linux_amd64.deb"
+
+# ------------------------- paths -------------------------
 WORK=/tmp/bootstrap
-mkdir -p "$WORK" "$HOME/.vim/autoload" "$HOME/.oh-my-zsh"
+mkdir -p "$WORK" "$HOME/.vim/autoload"
+HYPERFINE_DEB="$WORK/hyperfine.deb"
+LSD_DEB="$WORK/lsd.deb"
+BTOP_TBZ="$WORK/btop-x86_64-linux-musl.tbz"
+GOTOP_DEB="$WORK/gotop.deb"
+PLUG_VIM="$HOME/.vim/autoload/plug.vim"
 OMZ_SH="$WORK/install_ohmyzsh.sh"
 UV_SH="$WORK/install_uv.sh"
-MM_TAR_DIR="$WORK/micromamba"
-mkdir -p "$MM_TAR_DIR"
+MM_TAR="$WORK/micromamba.tar"
 
-log "Resolving release tags (GitHub API)..."
-HYPERFINE_TAG="$(get_latest_tag sharkdp/hyperfine)"
-LSD_TAG="$(get_latest_tag lsd-rs/lsd)"
-BTOP_TAG="$(get_latest_tag aristocratos/btop)"
-GOTOP_TAG="$(get_latest_tag xxxserxxx/gotop)"
-
-# Artifact URLs
-HYPERFINE_DEB="https://github.com/sharkdp/hyperfine/releases/download/${HYPERFINE_TAG}/hyperfine_${HYPERFINE_TAG#v}_amd64.deb"
-LSD_DEB="https://github.com/lsd-rs/lsd/releases/download/${LSD_TAG}/lsd-musl_${LSD_TAG#v}_amd64.deb"
-BTOP_TBZ="https://github.com/aristocratos/btop/releases/download/${BTOP_TAG}/btop-x86_64-linux-musl.tbz"
-GOTOP_DEB="https://github.com/xxxserxxx/gotop/releases/download/${GOTOP_TAG}/gotop_${GOTOP_TAG}_linux_amd64.deb"
-PLUG_VIM_URL="https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
-OMZ_URL="https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh"
-UV_URL="https://astral.sh/uv/install.sh"
-MM_URL="https://micro.mamba.pm/api/micromamba/linux-64/latest"
-
-# 2) Parallel fetch of all artifacts & installer scripts
-log "Parallel downloading artifacts & installer scripts..."
-# Mix -O to WORK and -o to explicit paths. --output-dir applies to -O only.
+# ------------------------- parallel downloads -------------------------
+echo "[+] Parallel downloading artifacts (incl. plug.vim, OMZ, uv, micromamba)"
 curl --parallel --parallel-max 6 --create-dirs -fsS \
-  --output-dir "$WORK" \
-  -O "$HYPERFINE_DEB" \
-  -O "$LSD_DEB" \
-  -O "$BTOP_TBZ" \
-  -O "$GOTOP_DEB" \
-  -o "$HOME/.vim/autoload/plug.vim" "$PLUG_VIM_URL" \
-  -o "$OMZ_SH" "$OMZ_URL" \
-  -o "$UV_SH" "$UV_URL" \
-  -o "$MM_TAR_DIR/micromamba.tar" "$MM_URL"
+  -o "$HYPERFINE_DEB" "$HYPERFINE_DEB_URL" \
+  -o "$LSD_DEB"      "$LSD_DEB_URL" \
+  -o "$BTOP_TBZ"     "$BTOP_TBZ_URL" \
+  -o "$GOTOP_DEB"    "$GOTOP_DEB_URL" \
+  -o "$PLUG_VIM"     "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim" \
+  -o "$OMZ_SH"       "https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh" \
+  -o "$UV_SH"        "https://astral.sh/uv/install.sh" \
+  -o "$MM_TAR"       "https://micro.mamba.pm/api/micromamba/linux-64/latest"
 
-# 3) Local .deb install with apt (dependency-aware)
-log "Installing local .deb packages via apt..."
-apt-get -y -qq install \
-  "$WORK"/hyperfine_*_amd64.deb \
-  "$WORK"/lsd-musl_*_amd64.deb \
-  "$WORK"/gotop_*_linux_amd64.deb
+# Quick sanity checks (optional but helpful)
+for deb in "$HYPERFINE_DEB" "$LSD_DEB" "$GOTOP_DEB"; do
+  dpkg-deb -I "$deb" >/dev/null 2>&1 || { echo "[!] Invalid deb: $deb"; exit 3; }
+done
 
-# 4) btop install (prebuilt tbz contains Makefile installer)
-log "Installing btop..."
-tar -xjf "$WORK"/btop-x86_64-linux-musl.tbz -C "$WORK"
-make -C "$WORK"/btop -j"$(nproc)" install
+# ------------------------- install debs (your flow) -------------------------
+echo "[+] Installing hyperfine, lsd, gotop via dpkg -i (fix deps with apt -f if needed)"
+dpkg -i "$HYPERFINE_DEB" || apt-get -y -qq -f install
+dpkg -i "$LSD_DEB"       || apt-get -y -qq -f install
+dpkg -i "$GOTOP_DEB"     || apt-get -y -qq -f install
 
-# 5) uv install (save-then-run)
-log "Installing uv..."
+# ------------------------- btop -------------------------
+echo "[+] Installing btop from tbz"
+tar -xjf "$BTOP_TBZ" -C "$WORK"
+make -C "$WORK/btop" install
+
+# ------------------------- uv (save-then-run; same official URL) -------------------------
+echo "[+] Installing uv"
 sh "$UV_SH"
 
-# 6) oh-my-zsh (save-then-run, unattended)
-log "Installing oh-my-zsh..."
+# ------------------------- oh-my-zsh -------------------------
+echo "[+] Installing oh-my-zsh"
 sh "$OMZ_SH" --unattended || true
+git clone --depth=1 -q https://github.com/zsh-users/zsh-autosuggestions \
+    ~/.oh-my-zsh/plugins/zsh-autosuggestions || true
+git clone --depth=1 -q https://github.com/romkatv/powerlevel10k.git \
+    "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k" || true
 
-# 6.1) zsh plugins/themes (serial small ops)
-if [ ! -d "$HOME/.oh-my-zsh/plugins/zsh-autosuggestions" ]; then
-  git clone --depth=1 -q https://github.com/zsh-users/zsh-autosuggestions \
-    "$HOME/.oh-my-zsh/plugins/zsh-autosuggestions"
-fi
-ZSH_CUSTOM_DIR="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}"
-mkdir -p "$ZSH_CUSTOM_DIR/themes"
-if [ ! -d "$ZSH_CUSTOM_DIR/themes/powerlevel10k" ]; then
-  git clone --depth=1 -q https://github.com/romkatv/powerlevel10k.git \
-    "$ZSH_CUSTOM_DIR/themes/powerlevel10k"
-fi
-
-# 7) micromamba install (save-then-run style)
-log "Installing micromamba..."
-# The API returns a tar stream; we saved it as micromamba.tar above
-mkdir -p "$MM_TAR_DIR/extract"
-tar -xvf "$MM_TAR_DIR/micromamba.tar" -C "$MM_TAR_DIR/extract" bin/micromamba
+# ------------------------- micromamba -------------------------
+echo "[+] Installing micromamba"
+mkdir -p "$WORK/mm_extract"
+tar -xvf "$MM_TAR" -C "$WORK/mm_extract" bin/micromamba
 mkdir -p "$HOME/.local/bin"
-mv "$MM_TAR_DIR/extract/bin/micromamba" "$HOME/.local/bin/micromamba"
-rm -rf "$MM_TAR_DIR"
+mv "$WORK/mm_extract/bin/micromamba" "$HOME/.local/bin/micromamba"
+rm -rf "$WORK/mm_extract"
 
-# Activate & init
-if command -v "$HOME/.local/bin/micromamba" >/dev/null 2>&1; then
-  eval "$("$HOME/.local/bin/micromamba" shell hook --shell bash)"
-  "$HOME/.local/bin/micromamba" shell init -s zsh -r "$HOME/micromamba" || true
-  "$HOME/.local/bin/micromamba" config append channels conda-forge || true
-  "$HOME/.local/bin/micromamba" config set channel_priority strict || true
-fi
+# init micromamba (idempotent)
+eval "$("$HOME/.local/bin/micromamba" shell hook --shell bash)"
+"$HOME/.local/bin/micromamba" shell init -s zsh -r "$HOME/micromamba" || true
+"$HOME/.local/bin/micromamba" config append channels conda-forge || true
+"$HOME/.local/bin/micromamba" config set channel_priority strict || true
 
-# 8) dotfiles linking & appends
-log "Linking dotfiles..."
-for file_path in $(find "$PWD" -maxdepth 1 -type f -name ".*"); do
-  fname="$(basename "$file_path")"
-  if [[ "$fname" != ".zshrc" && "$fname" != ".gdbinit" && "$fname" != ".gitconfig" ]]; then
+# ------------------------- dotfiles -------------------------
+echo "[+] Linking dotfiles & appending rc snippets"
+for file_path in $(find "$PWD" -type f -maxdepth 1 -name ".*"); do
+  fname=$(basename "$file_path")
+  if ! [ "$fname" = ".zshrc" ] && ! [ "$fname" = ".gdbinit" ] && ! [ "$fname" = ".gitconfig" ]; then
     ln -sf "$file_path" "$HOME/$fname"
   fi
 done
-: > "$HOME/.gitconfig"; cat "$PWD/.gitconfig" >> "$HOME/.gitconfig"
-: > "$HOME/.zshrc";    cat "$PWD/.zshrc_vastai" >> "$HOME/.zshrc"
-: > "$HOME/.p10k.zsh"; cat "$PWD/.p10k_vastai.zsh" >> "$HOME/.p10k.zsh"
+cat .gitconfig       >> "$HOME/.gitconfig"
+cat .zshrc_vastai    >> "$HOME/.zshrc"
+cat .p10k_vastai.zsh >> "$HOME/.p10k.zsh"
 
-# 9) tmux tweak for 2.x
-if command -v tmux >/dev/null 2>&1; then
-  TMUX_VERSION="$(tmux -V | awk '{print $2}')"
-  if [[ "${TMUX_VERSION:0:1}" == "2" ]]; then
-    sed -i 's/bind \\\\ split-window -h/bind \\ split-window -h/g' "$HOME/.tmux.conf" || true
-  fi
+# ------------------------- tmux 2.x tweak -------------------------
+TMUX_VERSION=$(tmux -V | cut -d' ' -f2)
+if [[ "${TMUX_VERSION:0:1}" == "2" ]]; then
+  sed -i 's/bind \\ split-window -h/bind \\ split-window -h/g' "$HOME/.tmux.conf"
 fi
 
-# 10) vim-plug plugin install
-log "Running PlugInstall synchronously..."
-vim +'PlugInstall --sync' +qall || true
+# ------------------------- vim-plug -------------------------
+echo "[+] Installing vim-plug plugins (sync)"
+vim +'PlugInstall --sync' +qall
 
-# 11) locale
-log "Setting locale to en_US.UTF-8..."
-{
-  echo 'LANG="en_US.UTF-8"'
-  echo 'LC_ALL="en_US.UTF-8"'
-} > /etc/default/locale || true
+# ------------------------- locale (append) -------------------------
+echo 'LANG="en_US.UTF-8"' >> /etc/default/locale
+echo 'LC_ALL="en_US.UTF-8"' >> /etc/default/locale
 
-log "All done."
+echo "[+] Done."
