@@ -42,7 +42,20 @@ MM_TAR="$WORK/micromamba.tar"
 
 # ------------------------- parallel downloads -------------------------
 echo "[+] Parallel downloading artifacts (incl. plug.vim, OMZ, uv, micromamba)"
-curl --parallel --parallel-max 6 --create-dirs -fsS \
+# curl --parallel --parallel-max 6 --create-dirs -fsS \
+#   -o "$HYPERFINE_DEB" "$HYPERFINE_DEB_URL" \
+#   -o "$LSD_DEB"      "$LSD_DEB_URL" \
+#   -o "$BTOP_TBZ"     "$BTOP_TBZ_URL" \
+#   -o "$GOTOP_DEB"    "$GOTOP_DEB_URL" \
+#   -o "$PLUG_VIM"     "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim" \
+#   -o "$OMZ_SH"       "https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh" \
+#   -o "$UV_SH"        "https://astral.sh/uv/install.sh" \
+#   -o "$MM_TAR"       "https://micro.mamba.pm/api/micromamba/linux-64/latest"
+# NOTE: All comments are in English.
+curl --parallel --parallel-max 6 --create-dirs \
+  --location \                # follow redirects (CRITICAL)
+  --retry 5 --retry-all-errors --retry-delay 2 --max-time 600 \
+  --fail --silent --show-error \
   -o "$HYPERFINE_DEB" "$HYPERFINE_DEB_URL" \
   -o "$LSD_DEB"      "$LSD_DEB_URL" \
   -o "$BTOP_TBZ"     "$BTOP_TBZ_URL" \
@@ -51,6 +64,7 @@ curl --parallel --parallel-max 6 --create-dirs -fsS \
   -o "$OMZ_SH"       "https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh" \
   -o "$UV_SH"        "https://astral.sh/uv/install.sh" \
   -o "$MM_TAR"       "https://micro.mamba.pm/api/micromamba/linux-64/latest"
+
 
 # Quick sanity checks (optional but helpful)
 for deb in "$HYPERFINE_DEB" "$LSD_DEB" "$GOTOP_DEB"; do
