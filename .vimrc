@@ -98,6 +98,7 @@ let g:lightline = {
       \ 'colorscheme': 'powerlineish',
       "\ 'colorscheme': 'embark',
       \ }
-colorscheme embark
-colorscheme embark
-colorscheme embark
+" Only apply colorscheme if the file exists on &rtp
+if !empty(globpath(&rtp, 'colors/embark.vim'))
+  silent! colorscheme embark  " suppress any message if something is off
+endif

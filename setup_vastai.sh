@@ -108,10 +108,7 @@ fi
 if [[ ! -f ~/.vim/autoload/plug.vim ]]; then
     curl -sfLo ~/.vim/autoload/plug.vim --create-dirs \
         https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-    # vim +PlugInstall +qall
-    # vim -c 'PlugInstall --sync' -c qall
-    vim +'PlugInstall --sync' +qall
-    echo "colorscheme embark" >> ~/.vimrc
+    vim +PlugInstall +qall
 fi
 
 echo 'LANG="en_US.UTF-8"' >> /etc/default/locale
