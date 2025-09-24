@@ -53,7 +53,7 @@ echo "[+] Parallel downloading artifacts (incl. plug.vim, OMZ, uv, micromamba)"
 #   -o "$MM_TAR"       "https://micro.mamba.pm/api/micromamba/linux-64/latest"
 # NOTE: All comments are in English.
 curl --parallel --parallel-max 6 --create-dirs \
-  --location \                # follow redirects (CRITICAL)
+  --location \
   --retry 5 --retry-all-errors --retry-delay 2 --max-time 600 \
   --fail --silent --show-error \
   -o "$HYPERFINE_DEB" "$HYPERFINE_DEB_URL" \
