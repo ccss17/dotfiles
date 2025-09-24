@@ -1,9 +1,4 @@
 #!/usr/bin/env bash
-# Final bootstrap script (your URLs & filenames preserved)
-# - Comments are in English only.
-# - Parallel downloads via curl --parallel (incl. plug.vim, oh-my-zsh, uv, micromamba)
-# - Keep your original URL patterns & dpkg -i flow; just add speed & stability tweaks.
-
 set -Eeuo pipefail
 trap 'echo "[!] Failed at line $LINENO: $BASH_COMMAND" >&2' ERR
 export DEBIAN_FRONTEND=noninteractive
@@ -42,10 +37,6 @@ MM_TAR="$WORK/micromamba.tar"
 
 # ------------------------- parallel downloads -------------------------
 echo "[+] Parallel downloading artifacts (incl. plug.vim, OMZ, uv, micromamba)"
-# curl --parallel --parallel-max 6 --create-dirs \
-#   --location \
-#   --retry 5 --retry-all-errors --retry-delay 2 --max-time 600 \
-#   --fail --silent --show-error \
 curl -sSfL -Z --parallel-max 10 \
   -o "$HYPERFINE_DEB" "$HYPERFINE_DEB_URL" \
   -o "$LSD_DEB"      "$LSD_DEB_URL" \
@@ -95,7 +86,6 @@ mv "$WORK/mm_extract/bin/micromamba" "$HOME/.local/bin/micromamba"
 rm -rf "$WORK/mm_extract"
 
 # init micromamba (idempotent)
-# Ensure a stable root prefix for micromamba (works with `set -u`)
 export MAMBA_ROOT_PREFIX="$HOME/micromamba"
 export MAMBA_EXE="$HOME/.local/bin/micromamba"
 eval "$("$MAMBA_EXE" shell hook --shell bash --root-prefix "$MAMBA_ROOT_PREFIX")"
