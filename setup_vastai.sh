@@ -11,7 +11,8 @@ export DEBIAN_FRONTEND=noninteractive
 # ------------------------- base packages -------------------------
 echo "[+] Installing base packages (single apt txn)"
 apt-get update -qq
-apt-get -y -qq install --no-install-recommends git zsh vim tmux unzip curl wget fd-find bat time nvtop python3.12-dev build-essential tree
+# apt-get -y -qq install --no-install-recommends git zsh vim tmux unzip curl wget fd-find bat time nvtop python3.12-dev build-essential tree
+apt-get -y -qq install git zsh vim tmux unzip curl wget fd-find bat time nvtop python3.12-dev build-essential tree
 
 # ------------------------- resolve versions (exactly like yours) -------------------------
 # Avoid curl (23) by disabling pipefail only around these pipelines
@@ -42,10 +43,11 @@ MM_TAR="$WORK/micromamba.tar"
 
 # ------------------------- parallel downloads -------------------------
 echo "[+] Parallel downloading artifacts (incl. plug.vim, OMZ, uv, micromamba)"
-curl --parallel --parallel-max 6 --create-dirs \
-  --location \
-  --retry 5 --retry-all-errors --retry-delay 2 --max-time 600 \
-  --fail --silent --show-error \
+# curl --parallel --parallel-max 6 --create-dirs \
+#   --location \
+#   --retry 5 --retry-all-errors --retry-delay 2 --max-time 600 \
+#   --fail --silent --show-error \
+curl -sSfL -Z --parallel-max 10 \
   -o "$HYPERFINE_DEB" "$HYPERFINE_DEB_URL" \
   -o "$LSD_DEB"      "$LSD_DEB_URL" \
   -o "$BTOP_TBZ"     "$BTOP_TBZ_URL" \
