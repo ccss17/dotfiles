@@ -11,7 +11,15 @@ trap 'echo "[!] Failed at line $LINENO: $BASH_COMMAND" >&2' ERR
 export DEBIAN_FRONTEND=noninteractive
 
 log(){ printf "[+] %s\n" "$*"; }
-get_latest_tag(){ curl -fsSL "https://api.github.com/repos/$1/releases/latest" | grep -m1 '"tag_name"' | cut -d '"' -f 4; }
+# drop-in replacement for your helper
+get_latest_tag() {
+  # Download JSON fully first to avoid SIGPIPE from early-exiting parsers
+  local json
+  json="$(curl -fsSL "https://api.github.com/repos/$1/releases/latest")" || return 1
+  # Parse without jq (keep dependencies minimal)
+  printf '%s\n' "$json" | sed -n 's/.*"tag_name"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p' | head -n1
+}
+
 
 # 0) Base packages in a single transaction
 log "Updating apt index & installing base packages..."
