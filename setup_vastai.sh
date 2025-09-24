@@ -103,10 +103,25 @@ mv "$WORK/mm_extract/bin/micromamba" "$HOME/.local/bin/micromamba"
 rm -rf "$WORK/mm_extract"
 
 # init micromamba (idempotent)
-eval "$("$HOME/.local/bin/micromamba" shell hook --shell bash)"
-"$HOME/.local/bin/micromamba" shell init -s zsh -r "$HOME/micromamba" || true
-"$HOME/.local/bin/micromamba" config append channels conda-forge || true
-"$HOME/.local/bin/micromamba" config set channel_priority strict || true
+# eval "$("$HOME/.local/bin/micromamba" shell hook --shell bash)"
+# "$HOME/.local/bin/micromamba" shell init -s zsh -r "$HOME/micromamba" || true
+# "$HOME/.local/bin/micromamba" config append channels conda-forge || true
+# "$HOME/.local/bin/micromamba" config set channel_priority strict || true
+
+# Ensure a stable root prefix for micromamba (works with `set -u`)
+export MAMBA_ROOT_PREFIX="$HOME/micromamba"
+export MAMBA_EXE="$HOME/.local/bin/micromamba"
+
+# Load shell hook (pass root prefix explicitly)
+eval "$("$MAMBA_EXE" shell hook --shell bash --root-prefix "$MAMBA_ROOT_PREFIX")"
+
+# Initialize zsh using the same root prefix
+"$MAMBA_EXE" shell init -s zsh -r "$MAMBA_ROOT_PREFIX"
+
+# Config as you had
+micromamba config append channels conda-forge
+micromamba config set channel_priority strict
+
 
 # ------------------------- dotfiles -------------------------
 echo "[+] Linking dotfiles & appending rc snippets"
