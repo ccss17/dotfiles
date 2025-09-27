@@ -1,22 +1,46 @@
-*.deb
+# — OS cruft —
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+Icon?
+._*
+$RECYCLE.BIN/
 
-# Compiled source #
-###################
-*.com
-*.class
-*.dll
-*.exe
-*.o
-# *.so
 
-# Temporary files #
-###################
+# — Editor/IDE temps —
+*~
 *.swp
 *.swo
-*~
+.#*
+\#*\#
 
-# Packages #
-############
+
+# — Generic build artifacts —
+*.o
+*.class
+*.exe
+*.dll
+*.com
+*.pid
+*.so # keep commented to avoid hiding intentional shared libs
+
+
+# — Logs —
+*.log
+
+
+# — Python caches (safe globally) —
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+
+# — Archives & packages  —
 *.7z
 *.dmg
 *.gz
@@ -25,21 +49,10 @@
 *.rar
 *.tar
 *.zip
-
-# Logs and databases #
-######################
-*.log
-*.sql
-*.sqlite
-
-# OS generated files #
-######################
-.DS_Store*
-ehthumbs.db
-Icon?
-Thumbs.db
-
-*.lock
-*.pid
 *.deb
 *.tgz
+
+
+# — Databases  —
+*.sql
+*.sqlite

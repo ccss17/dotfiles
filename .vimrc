@@ -1,9 +1,4 @@
 syntax enable
-"set background=dark
-"colorscheme solarized
-"set termguicolors
-"colors onedark
-"colors monokai_pro
 
 set switchbuf=usetab
 set encoding=utf-8
